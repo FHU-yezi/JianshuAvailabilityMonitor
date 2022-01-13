@@ -5,7 +5,7 @@ from monitors import init_monitors
 from event_handlers import JobExecutedSuccessfully, JobExecutedFailure
 from config_service import GetConfig
 from log_service import AddRunLog
-from message_service import SendFeishuMessage
+from message_service import SendFeishuSystemMessage
 from register import get_registered_funcs_info
 from utils import CronToKwargs
 
@@ -43,10 +43,10 @@ AddRunLog(4, "事件回调注册完成")
 
 scheduler.start()
 AddRunLog(3, "调度器启动成功")
-SendFeishuMessage(GetConfig()["message_service"]["app_id"],
-                  GetConfig()["message_service"]["app_secret"],
-                  GetConfig()["message_service"]["email"],
-                  "调度器启动成功")
+SendFeishuSystemMessage(GetConfig()["message_service"]["app_id"],
+                        GetConfig()["message_service"]["app_secret"],
+                        GetConfig()["message_service"]["email"],
+                        "调度器启动成功")
 print("调度器启动成功")
 
 while True:
@@ -61,10 +61,10 @@ while True:
             AddRunLog(4, "已发起停止请求")
             scheduler.shutdown()
             AddRunLog(3, "调度器已停止")
-            SendFeishuMessage(GetConfig()["message_service"]["app_id"],
-                              GetConfig()["message_service"]["app_secret"],
-                              GetConfig()["message_service"]["email"],
-                              "调度器已停止")
+            SendFeishuSystemMessage(GetConfig()["message_service"]["app_id"],
+                                    GetConfig()["message_service"]["app_secret"],
+                                    GetConfig()["message_service"]["email"],
+                                    "调度器已停止")
             print("已安全停止运行")
             exit()
     elif command == "3":
@@ -72,10 +72,10 @@ while True:
         if input("确认强制停止运行吗？(y/n)\n>>>") == "y":
             scheduler.shutdown(wait=False)  # 不等待任务执行完毕
             AddRunLog(2, "调度器已强制停止")
-            SendFeishuMessage(GetConfig()["message_service"]["app_id"],
-                              GetConfig()["message_service"]["app_secret"],
-                              GetConfig()["message_service"]["email"],
-                              "调度器已强制停止")
+            SendFeishuSystemMessage(GetConfig()["message_service"]["app_id"],
+                                    GetConfig()["message_service"]["app_secret"],
+                                    GetConfig()["message_service"]["email"],
+                                    "调度器已强制停止")
             AddRunLog(0, "程序退出，原因：强制停止")
             print("已强制停止运行")
             exit()
