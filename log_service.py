@@ -35,6 +35,8 @@ def AddMonitorLog(monitor_name: str, successed: bool = True,
 
 def IsFailedUntilNow(monitor_name: str) -> bool:
     try:
+        if MonitorLog.select().where(MonitorLog.monitor_name == monitor_name).count() == 0:
+            return False  # 数据库中没有对应的记录，第一次运行即出现错误
         last_log = MonitorLog.select().where(MonitorLog.monitor_name == monitor_name).order_by(MonitorLog.id.desc()).get()
         return not last_log.successed
     except Exception as e:
