@@ -10,7 +10,7 @@ from register import register_task
 """
 
 
-@register_task("简书主站监控", "0 1-59 * * * ?")  # 每分钟执行一次
+@register_task("简书主站监控", "0 1-59 * * * *")  # 每分钟执行一次
 def JianshuMainPageMonitor():
     try:
         response = httpx_get("https://www.jianshu.com/")
@@ -27,7 +27,7 @@ def JianshuMainPageMonitor():
     return (success, status_code, message)
 
 
-@register_task("贝壳小岛主站监控", "* 0/5 * * * ?")  # 每五分钟执行一次
+@register_task("贝壳小岛主站监控", "* 0/5 * * * *")  # 每五分钟执行一次
 def BeiKeIslandMainPageMonitor():
     try:
         response = httpx_get("http://www.beikeisland.com/")
@@ -44,7 +44,7 @@ def BeiKeIslandMainPageMonitor():
     return (success, status_code, message)
 
 
-@register_task("消零派辅助工具监控", "* 0/5 * * * ?")  # 每五分钟执行一次
+@register_task("消零派辅助工具监控", "* 0/5 * * * *")  # 每五分钟执行一次
 def DisZeroerHelperMainPageMonitor():
     try:
         response = httpx_get("http://120.27.239.120:8601/")
@@ -61,7 +61,7 @@ def DisZeroerHelperMainPageMonitor():
     return (success, status_code, message)
 
 
-@register_task("简书小工具集监控", "* 0/5 * * * ?")  # 每五分钟执行一次
+@register_task("简书小工具集监控", "* 0/5 * * * *")  # 每五分钟执行一次
 def JianshuMicroFeaturesMainPageMonitor():
     try:
         response = httpx_get("http://120.27.239.120:8602")
