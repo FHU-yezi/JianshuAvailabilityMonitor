@@ -1,11 +1,11 @@
 from apscheduler.events import EVENT_JOB_ERROR, EVENT_JOB_EXECUTED
 from apscheduler.schedulers.background import BackgroundScheduler
 
-from monitors import init_monitors
-from event_handlers import JobExecutedSuccessfully, JobExecutedFailure
 from config_service import GetConfig
+from event_handlers import JobExecutedFailure, JobExecutedSuccessfully
 from log_service import AddRunLog
 from message_service import SendFeishuSystemMessage
+from monitors import init_monitors
 from register import get_registered_funcs_info
 from utils import CronToKwargs
 

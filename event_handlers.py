@@ -1,6 +1,7 @@
-from log_service import AddMonitorLog, AddRunLog, IsFailedUntilNow
-from message_service import SendFeishuMonitorFailureMessage, SendFeishuReAvailableMessage
 from config_service import GetConfig
+from log_service import AddMonitorLog, AddRunLog, IsFailedUntilNow
+from message_service import (SendFeishuMonitorFailureMessage,
+                             SendFeishuReAvailableMessage)
 
 
 def JobExecutedSuccessfully(event) -> None:

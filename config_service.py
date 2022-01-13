@@ -1,5 +1,6 @@
-from yaml import dump, load, SafeLoader
 from typing import Dict
+
+from yaml import SafeLoader, dump, load
 
 DEFALUT_CONFIG = {
     "message_service": {
