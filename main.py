@@ -1,10 +1,9 @@
-from ast import Add
 from apscheduler.events import EVENT_JOB_ERROR, EVENT_JOB_EXECUTED
 from apscheduler.schedulers.background import BackgroundScheduler
 
 import monitors  # 不加这行会导致任务列表为空
 from event_handlers import JobExecutedSuccessfully, JobExecutedFailure
-from config_service import CreateDefaultConfig, GetConfig
+from config_service import GetConfig
 from log_service import AddRunLog
 from message_service import SendFeishuMessage
 from register import get_registered_funcs_info
@@ -39,4 +38,36 @@ SendFeishuMessage(GetConfig()["message_service"]["app_id"],
                   GetConfig()["message_service"]["email"],
                   "调度器启动成功")
 
-input()
+while True:
+    command = input("请输入命令编号：\n1. 列出所有已注册任务\n2. 停止运行\n3. 强制停止运行\n>>>")
+
+    if command == "1":
+        for x in scheduler.get_jobs():
+            print(x)  # 分行输出
+    elif command == "2":
+        if input("确认停止运行吗？(y/n)\n>>>") == "y":
+            print("请等待任务执行完毕......")
+            AddRunLog(4, "已发起停止请求")
+            scheduler.shutdown()
+            AddRunLog(3, "调度器已停止")
+            SendFeishuMessage(GetConfig()["message_service"]["app_id"],
+                              GetConfig()["message_service"]["app_secret"],
+                              GetConfig()["message_service"]["email"],
+                              "调度器已停止")
+            print("已安全停止运行")
+            exit()
+    elif command == "3":
+        print("强制停止运行可能导致数据库异常，请谨慎操作")
+        if input("确认强制停止运行吗？(y/n)\n>>>") == "y":
+            scheduler.shutdown(wait=False)  # 不等待任务执行完毕
+            AddRunLog(2, "调度器已强制停止")
+            SendFeishuMessage(GetConfig()["message_service"]["app_id"],
+                              GetConfig()["message_service"]["app_secret"],
+                              GetConfig()["message_service"]["email"],
+                              "调度器已强制停止")
+            print("已强制停止运行")
+            exit()
+    elif command == "":
+        continue  # 直接按下回车将重新输出提示信息
+    else:
+        print("指令无效，请检查")
