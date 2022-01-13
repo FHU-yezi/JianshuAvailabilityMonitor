@@ -20,7 +20,8 @@ def JianshuMainPageMonitor():
         message = str(e)
     else:
         message = ""
-        if response.status_code != 200:
+        status_code = response.status_code
+        if status_code != 200:
             success = False
         else:
             success = True
@@ -30,14 +31,15 @@ def JianshuMainPageMonitor():
 @register_task("贝壳小岛主站监控", "* 0/5 * * * *")  # 每五分钟执行一次
 def BeiKeIslandMainPageMonitor():
     try:
-        response = httpx_get("http://www.beikeisland.com/")
+        response = httpx_get("http://www.beikeisland.com/index.html")
     except Exception as e:
         success = False
         status_code = -1
         message = str(e)
     else:
         message = ""
-        if response.status_code != 200:
+        status_code = response.status_code
+        if status_code != 200:
             success = False
         else:
             success = True
@@ -54,7 +56,8 @@ def DisZeroerHelperMainPageMonitor():
         message = str(e)
     else:
         message = ""
-        if response.status_code != 200:
+        status_code = response.status_code
+        if status_code != 200:
             success = False
         else:
             success = True
@@ -71,7 +74,8 @@ def JianshuMicroFeaturesMainPageMonitor():
         message = str(e)
     else:
         message = ""
-        if response.status_code != 200:
+        status_code = response.status_code
+        if status_code != 200:
             success = False
         else:
             success = True
