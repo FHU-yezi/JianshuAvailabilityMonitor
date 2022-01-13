@@ -31,3 +31,12 @@ def AddMonitorLog(monitor_name: str, successed: bool = True,
         MonitorLog.create(time=datetime.now(), monitor_name=monitor_name, successed=successed, status_code=status_code, message=message)
     except DatabaseError as e:
         AddRunLog(level=1, message=f"添加监控日志失败：{e}")
+
+
+def IsFailedUntilNow(monitor_name: str) -> bool:
+    try:
+        last_log = MonitorLog.select().where(MonitorLog.monitor_name == monitor_name).order_by(MonitorLog.id.desc()).get()
+        return not last_log.successed
+    except Exception as e:
+        AddRunLog(level=1, message=f"查询监控日志失败：{e}")
+        return True  # 无法判断时假设任务一直处于失败状态，避免因此导致告警信息不发送
