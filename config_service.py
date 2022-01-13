@@ -2,7 +2,7 @@ from yaml import dump, load, SafeLoader
 from typing import Dict
 
 DEFALUT_CONFIG = {
-    "messae_service": {
+    "message_service": {
         "app_id": "",
         "app_secret": "",
         "email": ""
