@@ -24,6 +24,7 @@ def JobExecutedSuccessfully(event) -> None:
                                          GetConfig()["message_service"]["app_secret"],
                                          GetConfig()["message_service"]["email"],
                                          monitor_name)
+            AddRunLog(3, f"发送了服务恢复信息，服务恢复的任务：{monitor_name}")
     AddMonitorLog(monitor_name, success, status_code, message)
 
 
