@@ -80,3 +80,7 @@ def JianshuMicroFeaturesMainPageMonitor():
         else:
             success = True
     return (success, status_code, message)
+
+
+def init_monitors():
+    pass  # 只是为了让这个模块上面的注册函数生效

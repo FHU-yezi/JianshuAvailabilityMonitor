@@ -1,7 +1,7 @@
 from apscheduler.events import EVENT_JOB_ERROR, EVENT_JOB_EXECUTED
 from apscheduler.schedulers.background import BackgroundScheduler
 
-import monitors  # 不加这行会导致任务列表为空
+from monitors import init_monitors
 from event_handlers import JobExecutedSuccessfully, JobExecutedFailure
 from config_service import GetConfig
 from log_service import AddRunLog
@@ -18,6 +18,8 @@ if not all((GetConfig()["message_service"]["app_id"],
     print("消息服务配置不完整，请检查配置文件")
     AddRunLog(0, "程序退出，原因：消息服务配置不完整")
     exit(1)
+
+init_monitors()  # 不加这行会导致任务列表为空
 
 scheduler = BackgroundScheduler()
 
