@@ -1,5 +1,8 @@
-from db_config import init_db, RunLog, MonitorLog
 from datetime import datetime
+
+from peewee import DatabaseError
+
+from db_config import MonitorLog, RunLog, init_db
 
 """
 日志等级定义：
@@ -28,5 +31,5 @@ def AddMonitorLog(monitor_name: str, successed: bool = True,
         raise ValueError("message 不能为空")
     try:
         MonitorLog.create(time=datetime.now(), monitor_name=monitor_name, successed=successed, status_code=status_code, message=message)
-    except:
-        AddRunLog(level=1, message=f"添加监控日志失败：{message}")
+    except DatabaseError as e:
+        AddRunLog(level=1, message=f"添加监控日志失败：{e}")
