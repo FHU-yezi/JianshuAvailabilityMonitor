@@ -11,6 +11,14 @@ from utils import CronToKwargs
 
 AddRunLog(4, "导入模块成功")
 
+if not all((GetConfig()["message_service"]["app_id"],
+           GetConfig()["message_service"]["app_secret"],
+           GetConfig()["message_service"]["email"])):
+    AddRunLog(1, "消息服务配置不完整")
+    print("消息服务配置不完整，请检查配置文件")
+    AddRunLog(0, "程序退出，原因：消息服务配置不完整")
+    exit(1)
+
 scheduler = BackgroundScheduler()
 
 AddRunLog(4, "初始化调度器成功")
@@ -37,6 +45,7 @@ SendFeishuMessage(GetConfig()["message_service"]["app_id"],
                   GetConfig()["message_service"]["app_secret"],
                   GetConfig()["message_service"]["email"],
                   "调度器启动成功")
+print("调度器启动成功")
 
 while True:
     command = input("请输入命令编号：\n1. 列出所有已注册任务\n2. 停止运行\n3. 强制停止运行\n>>>")
@@ -65,6 +74,7 @@ while True:
                               GetConfig()["message_service"]["app_secret"],
                               GetConfig()["message_service"]["email"],
                               "调度器已强制停止")
+            AddRunLog(0, "程序退出，原因：强制停止")
             print("已强制停止运行")
             exit()
     elif command == "":
