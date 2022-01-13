@@ -1,4 +1,5 @@
 from httpx import get as httpx_get
+from JianshuResearchTools.user import GetUserName
 
 from register import register_task
 
@@ -25,6 +26,20 @@ def JianshuMainPageMonitor():
             success = False
         else:
             success = True
+    return (success, status_code, message)
+
+
+@register_task("简书 Json API 监控", "0 1-59 * * * *")  # 每分钟执行一次
+def JianshuJsonDataAPIMonitor():
+    result = GetUserName("https://www.jianshu.com/u/ea36c8d8aa30/")
+    if result != "初心不变_叶子":
+        success = False
+        status_code = -1
+        message = "数据不正常"
+    else:
+        success = True
+        status_code = 200
+        message = ""
     return (success, status_code, message)
 
 
