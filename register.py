@@ -23,7 +23,7 @@ def register_task(task_name: str = None, run_cron: str = None) -> Callable:
             else:
                 registered_funcs[func.__name__] = [func, run_cron]
             return func
-        return inner(task_name)
+        return inner(task_name, run_cron)
     return outer
 
 

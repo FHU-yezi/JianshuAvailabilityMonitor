@@ -9,7 +9,7 @@ class RunLog(Model):
     message = CharField()
 
     class Meta:
-        database = SqliteDatabase('run_log.db')
+        database = SqliteDatabase("log.db")
 
 
 class MonitorLog(Model):
@@ -21,7 +21,7 @@ class MonitorLog(Model):
     message = CharField()
 
     class Meta:
-        database = SqliteDatabase('monitor_log.db')
+        database = SqliteDatabase("log.db")
 
 
 def init_db() -> None:
